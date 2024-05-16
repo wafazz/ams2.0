@@ -24,5 +24,5 @@ Route::get('/dashboard', 'App\Http\Controllers\DashboardController@index')->name
 Route::get('/home', 'App\Http\Controllers\AUTH\LoginController@home');
 Route::get('/profile', 'App\Http\Controllers\ProfileController@index');
 Route::post('/profile', 'App\Http\Controllers\ProfileController@updatePI');
-Route::post('/profile', 'App\Http\Controllers\ProfileController@updateProfile');
+Route::post('/update-profile', 'App\Http\Controllers\ProfileController@updateProfile');
 Route::post('/change-password', 'App\Http\Controllers\ProfileController@updatePassword');

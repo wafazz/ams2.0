@@ -190,7 +190,7 @@
                             </style>
                             <div class="tab-content p-0 text-left">
 
-                                <form action="" method="post" enctype="multipart/form-data">
+                                <form action="{{ url('') }}/update-profile" method="post" enctype="multipart/form-data">
                                     {{ csrf_field() }}
 
                                     <div class="form-group">
