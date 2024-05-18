@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Support\Facades\DB;
 use App\User;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Cookie;
 
 class LoginController extends Controller
 {
@@ -83,13 +85,14 @@ class LoginController extends Controller
             if (Auth::attempt(['email' => $email, 'password' => $password, 'status' => 1])) {
                 // Authentication passed...
                 //echo "1";
-                $lastURL = Request::cookie('lastURL');
+                //dd($request->cookie('lastURL'));
+                //$lastURL = $request->cookie('lastURL');
 
-                if(empty($lastURL)){
+                //if(empty($lastURL)){
                     return redirect()->intended('dashboard');
-                }else{
-                    return redirect($lastURL);
-                }
+                //}else{
+                    //return redirect($lastURL);
+                //}
                 
             }else{
                 //Check Is Active

@@ -440,6 +440,14 @@
             });
     </script>
     <script>
+        // Bootstrap tooltips initialization (if needed)
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl);
+        });
+
+    </script>
+    <script>
         $(function() {
               var Toast = Swal.mixin({
                 toast: true,

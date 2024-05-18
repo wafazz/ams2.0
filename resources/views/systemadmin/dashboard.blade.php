@@ -25,7 +25,7 @@
         <div class="container-fluid">
             <!-- Small boxes (Stat box) -->
             <div class="row">
-                <div class="col-lg-12 col-12">
+                {{-- <div class="col-lg-12 col-12">
                     <!-- small box -->
                     <div class="small-box bg-default" style="text-align:center;padding: 15px 20px;">
 
@@ -36,12 +36,12 @@
                                 <h5>This Year Sales</h5>
                                 <h5 style="font-weight: bold;
                     margin-top: -12px;
-                    margin-bottom: -6px;">RM1,358,016.00</h5>
+                    margin-bottom: -6px;">RM{{ number_format($tsty, 2) }}</h5>
                                 ......
                                 <h6>Last Year Sales</h6>
                                 <h6 style="font-weight: bold;
                     margin-top: -12px;
-                    margin-bottom: -6px;">RM0.00</h6>
+                    margin-bottom: -6px;">RM{{ number_format($tsly, 2) }}</h6>
 
                                 </div>
 
@@ -53,12 +53,12 @@
                                 <h5>Today Sales</h5>
                                 <h5 style="font-weight: bold;
                     margin-top: -12px;
-                    margin-bottom: -6px;">RM0.00</h5>
+                    margin-bottom: -6px;">RM{{ number_format($tstd, 2) }}</h5>
                                 ......
                                 <h6>Yesterday Sales</h6>
                                 <h6 style="font-weight: bold;
                     margin-top: -12px;
-                    margin-bottom: -6px;">RM29,635.00</h6>
+                    margin-bottom: -6px;">RM{{ number_format($tsld, 2) }}</h6>
 
                                 </div>
 
@@ -71,12 +71,12 @@
                                 <h5>This Month Sales</h5>
                                 <h5 style="font-weight: bold;
                     margin-top: -12px;
-                    margin-bottom: -6px;">RM37,023.00</h5>
+                    margin-bottom: -6px;">RM{{ number_format($tstm, 2) }}</h5>
                                 ......
                                 <h6>Last Month Sales</h6>
                                 <h6 style="font-weight: bold;
                     margin-top: -12px;
-                    margin-bottom: -6px;">RM495,555.00</h6>
+                    margin-bottom: -6px;">RM{{ number_format($tslm, 2) }}</h6>
 
                                 </div>
 
@@ -87,13 +87,78 @@
                     </div>
 
 
+                </div> --}}
+
+                <div class="col-lg-12 col-12">
+                    <!-- small box -->
+                    <div class="small-box bg-danger">
+                        <div class="inner text-center">
+                            <h5>This Year Sales</h5>
+                                <h3 style="font-weight: bold;
+                    margin-top: -12px;
+                    margin-bottom: -6px;">RM{{ number_format($tsty, 2) }}</h3>
+                                ......
+                                <h6>Last Year Sales</h6>
+                                <h4 style="font-weight: bold;
+                    margin-top: -12px;
+                    margin-bottom: -6px;">RM{{ number_format($tsly, 2) }}</h4>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-cash"></i>
+                        </div>
+                        <a class="small-box-footer">as updated on {{ date("(l) jS F Y, h:i A", strtotime($dateNow)) }}</a>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 col-12">
+                    <!-- small box -->
+                    <div class="small-box bg-success">
+                        <div class="inner text-center">
+                            <h5>Today Sales</h5>
+                            <h3 style="font-weight: bold;
+                margin-top: -12px;
+                margin-bottom: -6px;">RM{{ number_format($tstd, 2) }}</h3>
+                            ......
+                            <h6>Yesterday Sales</h6>
+                            <h4 style="font-weight: bold;
+                margin-top: -12px;
+                margin-bottom: -6px;">RM{{ number_format($tsld, 2) }}</h4>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-cash"></i>
+                        </div>
+                        <a class="small-box-footer">as updated on {{ date("(l) jS F Y, h:i A", strtotime($dateNow)) }}</a>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-12">
+                    <!-- small box -->
+                    <div class="small-box bg-warning">
+                        <div class="inner text-center">
+                            <h5>This Month Sales</h5>
+                                <h3 style="font-weight: bold;
+                    margin-top: -12px;
+                    margin-bottom: -6px;">RM{{ number_format($tstm, 2) }}</h3>
+                                ......
+                                <h6>Last Month Sales</h6>
+                                <h4 style="font-weight: bold;
+                    margin-top: -12px;
+                    margin-bottom: -6px;">RM{{ number_format($tslm, 2) }}</h4>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-cash"></i>
+                        </div>
+                        <a class="small-box-footer">as updated on {{ date("(l) jS F Y, h:i A", strtotime($dateNow)) }}</a>
+                    </div>
+                </div>
+                <div class="col-lg-12 col-12">
+                    <hr class="mt-2 mb-4">
                 </div>
                 
                 <div class="col-lg-4 col-6">
                     <!-- small box -->
                     <div class="small-box bg-info">
                         <div class="inner">
-                            <h3>0</h3>
+                            <h3>{{ $oOverall }}</h3>
                             <p>Total Order</p>
                         </div>
                         <div class="icon">
@@ -122,9 +187,9 @@
                     <!-- small box -->
                     <div class="small-box bg-warning">
                         <div class="inner">
-                            <h3>0.00</h3>
+                            <h3>{{ number_format($overallSales, 2) }}</h3>
 
-                            <p>Total Sales</p>
+                            <p>Total Sales (Overall)</p>
                         </div>
                         <div class="icon">
                             <i class="ion ion-cash"></i>

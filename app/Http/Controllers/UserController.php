@@ -75,7 +75,8 @@ class UserController extends Controller
                         'photo' =>$userPhoto, 
                         'name' => $getUser[$c]->full_name, 
                         'email' => $getUser[$c]->email, 
-                        'role' => $roleName
+                        'role' => $roleName, 
+                        'status' => $getUser[$c]->status
                     ];
                 }
 
@@ -96,6 +97,93 @@ class UserController extends Controller
                 
             }
 
+            
+        }
+    }
+
+    public function activateUser($id)
+    {
+        $userinfo = Auth::user();
+        //$data = System::all();
+        $anotherController = new DefinedController();
+
+        if($userinfo == null){
+            $fullUrl = Request::fullUrl();
+            Cookie::queue('lastURL', $fullUrl, 1440);
+            $assets = "";
+            //echo "1";
+            return view('auth.login', compact('assets'));
+        }else{
+
+            $roleArray = array('1', '2');
+            if(in_array($userinfo->role,  $roleArray))
+            {
+                $userStatus = $anotherController->getStatus($id);
+                $dateUpdate = Carbon::now('Asia/Kuala_Lumpur');
+                if($userStatus == 0){
+                    DB::table('users')->where('id', $id)->update(['status'=>1, 'updated_at'=>$dateUpdate]);
+                    return redirect()->back()->with('success', 'Successful activate User #'.$id);
+                }
+            }
+            
+            
+        }
+    }
+
+    public function unbannedUser($id)
+    {
+        $userinfo = Auth::user();
+        //$data = System::all();
+        $anotherController = new DefinedController();
+
+        if($userinfo == null){
+            $fullUrl = Request::fullUrl();
+            Cookie::queue('lastURL', $fullUrl, 1440);
+            $assets = "";
+            //echo "1";
+            return view('auth.login', compact('assets'));
+        }else{
+
+            $roleArray = array('1', '2');
+            if(in_array($userinfo->role,  $roleArray))
+            {
+                $userStatus = $anotherController->getStatus($id);
+                $dateUpdate = Carbon::now('Asia/Kuala_Lumpur');
+                if($userStatus == 2){
+                    DB::table('users')->where('id', $id)->update(['status'=>1, 'updated_at'=>$dateUpdate]);
+                    return redirect()->back()->with('success', 'Successful unbanned User #'.$id);
+                }
+            }
+            
+            
+        }
+    }
+
+    public function bannedUser($id)
+    {
+        $userinfo = Auth::user();
+        //$data = System::all();
+        $anotherController = new DefinedController();
+
+        if($userinfo == null){
+            $fullUrl = Request::fullUrl();
+            Cookie::queue('lastURL', $fullUrl, 1440);
+            $assets = "";
+            //echo "1";
+            return view('auth.login', compact('assets'));
+        }else{
+
+            $roleArray = array('1', '2');
+            if(in_array($userinfo->role,  $roleArray))
+            {
+                $userStatus = $anotherController->getStatus($id);
+                $dateUpdate = Carbon::now('Asia/Kuala_Lumpur');
+                if($userStatus == 1){
+                    DB::table('users')->where('id', $id)->update(['status'=>2, 'updated_at'=>$dateUpdate]);
+                    return redirect()->back()->with('success', 'Successful banned User #'.$id);
+                }
+            }
+            
             
         }
     }

@@ -95,6 +95,10 @@
                                             <th class="text-center">Name</th>
                                             <th class="text-center">Email</th>
                                             <th class="text-center">Role</th>
+                                            @if ($userinfo->role == "1" || $userinfo->role == "2")
+                                                <th class="text-center">Action</th>
+                                            @endif
+                                            
                                             <!-- Add more columns if needed -->
                                         </tr>
                                     </thead>
@@ -109,7 +113,44 @@
                                                     <td class="text-center"><a href="{{ url('') }}/user-details/{{ $dataArray[$u]["id"] }}">#{{ $dataArray[$u]["id"] }}</a></td>
                                                     <td>{{ $dataArray[$u]["name"] }}</td>
                                                     <td class="text-center">{{ $dataArray[$u]["email"] }}</td>
-                                                    <td class="text-center">{{ $dataArray[$u]["role"] }}</td>
+                                                    <td class="text-center"><span class="active btn btn-secondary mb-2" style="display: block;width: fit-content;">{{ $dataArray[$u]["role"] }}</span>
+                                                    <?php
+                                                        if($dataArray[$u]["status"] == 1){
+                                                            ?>
+                                                            <span class="btn btn-success active mb-2" style="display: block;width: fit-content;">ACTIVE</span>
+                                                            <?php
+                                                        }else if($dataArray[$u]["status"] == 0){
+                                                            ?>
+                                                            <span class="btn btn-primary active mb-2" style="display: block;width: fit-content;">INACTIVE</span>
+                                                            <?php
+                                                        }else if($dataArray[$u]["status"] == 2){
+                                                            ?>
+                                                            <span class="btn btn-warning active mb-2" style="display: block;width: fit-content;">BANNED</span>
+                                                            <?php
+                                                        }
+                                                    ?>
+                                                    </td>
+                                                    @if ($userinfo->role == "1" || $userinfo->role == "2")
+                                                    <td class="text-center">
+                                                        <span class="btn btn-info mr-2 mb-2" onclick="window.location.href = '{{ url('') }}/user-details/{{ $dataArray[$u]['id'] }}'"><i class="far fa-eye"></i></span>
+                                                        <?php
+                                                        if($dataArray[$u]["status"] == 1){
+                                                            ?>
+                                                            <span class="btn btn-danger mr-2 mb-2" data-bs-toggle="tooltip" data-bs-placement="top" title="Banned this User" onclick="window.location.href = '{{ url('') }}/banned-user/{{ $dataArray[$u]['id'] }}'"><i class="fas fa-ban"></i></span>
+                                                            <?php
+                                                        }else if($dataArray[$u]["status"] == 0){
+                                                            ?>
+                                                            <span class="btn btn-primary mr-2 mb-2" data-bs-toggle="tooltip" data-bs-placement="top" title="Activate this User" onclick="window.location.href = '{{ url('') }}/activate-user/{{ $dataArray[$u]['id'] }}'"><i class="fas fa-check"></i></span>
+                                                            <?php
+                                                        }else if($dataArray[$u]["status"] == 2){
+                                                            ?>
+                                                            <span class="btn btn-success mr-2 mb-2" data-bs-toggle="tooltip" data-bs-placement="top" title="Unbanned this User" onclick="window.location.href = '{{ url('') }}/unbanned-user/{{ $dataArray[$u]['id'] }}'"><i class="fas fa-undo-alt"></i></span>
+                                                            <?php
+                                                        }
+                                                    ?>
+                                                        
+                                                    </td>
+                                                    @endif
                                                 </tr>
                                                 @endfor
                                             
