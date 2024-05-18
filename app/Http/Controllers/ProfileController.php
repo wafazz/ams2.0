@@ -12,6 +12,8 @@ use App\Http\Controllers\DefinedController;
 use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Cookie;
 
 class ProfileController extends Controller
 {
@@ -22,11 +24,17 @@ class ProfileController extends Controller
         $anotherController = new DefinedController();
 
         if($userinfo == null){
+            $fullUrl = Request::fullUrl();
+            Cookie::queue('lastURL', $fullUrl, 1440);
             $assets = "";
             //echo "1";
             return view('auth.login', compact('assets'));
         }else{
+
+            //after login, must have//
             $dataPI = $anotherController->getProfileImage($userinfo->id);
+            //END after login, must have//
+
             $dataSP = $anotherController->getSponsor($userinfo->id);
 
             //dd($dataSP);

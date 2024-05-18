@@ -83,7 +83,14 @@ class LoginController extends Controller
             if (Auth::attempt(['email' => $email, 'password' => $password, 'status' => 1])) {
                 // Authentication passed...
                 //echo "1";
-                return redirect()->intended('dashboard');
+                $lastURL = Request::cookie('lastURL');
+
+                if(empty($lastURL)){
+                    return redirect()->intended('dashboard');
+                }else{
+                    return redirect($lastURL);
+                }
+                
             }else{
                 //Check Is Active
                 $userLogin = User::where('email',$email)->first();

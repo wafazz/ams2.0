@@ -22,6 +22,8 @@ class DashboardController extends Controller
         //$data = System::all();
 
         if($userinfo == null){
+            $fullUrl = Request::fullUrl();
+            Cookie::queue('lastURL', $fullUrl, 1440);
             $assets = "";
             //echo "1";
             return view('auth.login', compact('assets'));
