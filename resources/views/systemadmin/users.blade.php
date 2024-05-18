@@ -43,7 +43,7 @@
                             <div class="tab-content p-0">
                                 <div class="row">
                                     <div class="col-lg-12">
-                                        <button class="btn btn-primary">Add New User</button>
+                                        <button class="btn btn-primary">+ Add New User</button>
                                     </div>
                                 </div>
                                 <div class="row" style="margin-top:20px;">
@@ -106,7 +106,7 @@
                                                 <tr>
                                                     <td class="text-center"><img src="{{ url('') }}/{{ $dataArray[$u]["photo"] }}" style="max-width: 100px;
                                                         width: 100px;"></td>
-                                                    <td class="text-center">{{ $dataArray[$u]["id"] }}</td>
+                                                    <td class="text-center"><a href="{{ url('') }}/user-details/{{ $dataArray[$u]["id"] }}">#{{ $dataArray[$u]["id"] }}</a></td>
                                                     <td>{{ $dataArray[$u]["name"] }}</td>
                                                     <td class="text-center">{{ $dataArray[$u]["email"] }}</td>
                                                     <td class="text-center">{{ $dataArray[$u]["role"] }}</td>
@@ -122,7 +122,11 @@
                                 <script>
                                     $(document).ready(function() {
                                         $('#userList').DataTable({
-                                            responsive: true
+                                            responsive: true,
+                                            "columnDefs": [ {
+                                                "targets": 0,
+                                                "orderable": false
+                                            } ]
                                         });
                                     });
                                 </script>

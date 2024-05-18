@@ -37,3 +37,4 @@ Route::post('/change-password', 'App\Http\Controllers\ProfileController@updatePa
 
 //users//
 Route::get('/user', 'App\Http\Controllers\UserController@index');
+Route::get('/user-details/{id}', 'App\Http\Controllers\UserController@userDetails');

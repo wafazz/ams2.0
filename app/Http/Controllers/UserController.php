@@ -71,7 +71,7 @@ class UserController extends Controller
                     $roleName = $anotherController->getRole($getUser[$c]->id);
                     $userPhoto = $anotherController->getProfileImage($getUser[$c]->id);
                     $dataArray[] = [
-                        'id' => "#".str_pad($getUser[$c]->id, 8, "0", STR_PAD_LEFT),
+                        'id' => $getUser[$c]->id,
                         'photo' =>$userPhoto, 
                         'name' => $getUser[$c]->full_name, 
                         'email' => $getUser[$c]->email, 
