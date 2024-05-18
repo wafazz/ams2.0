@@ -36,6 +36,8 @@
 
   <!-- DataTables -->
     <link rel="stylesheet" href="{{ url('') }}/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+    
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.7/css/dataTables.dataTables.css">
     <link rel="stylesheet" href="{{ url('') }}/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
     <link rel="stylesheet" href="{{ url('') }}/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
     <!-- jQuery -->
@@ -258,6 +260,14 @@
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
                                 <p>
                                     Dashboard
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item menu-open">
+                            <a href="{{ url('user') }}" class="nav-link {{ Request::is('user') ? 'active' : '' }}">
+                                <i class="nav-icon fas fa-users"></i>
+                                <p>
+                                    User/Mmber
                                 </p>
                             </a>
                         </li>

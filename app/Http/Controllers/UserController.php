@@ -35,6 +35,9 @@ class UserController extends Controller
             //after login, must have//
             $dataPI = $anotherController->getProfileImage($userinfo->id);
             //END after login, must have//
+            $assets = "";
+            $pageName = "User/Member";
+            $role = "role_".$userinfo->role;
 
             if(empty($_GET["level"])){
                 $level = Session::get('userLevel');
@@ -50,7 +53,7 @@ class UserController extends Controller
                         $getUser = DB::table('users')
                         ->where('email', '!=', $userinfo->email)
                         ->where('network', 'like', '%['.$userinfo->id.']%')
-                        ->where('role', '>=', $level)
+                        ->where('role', '=', $level)
                         ->get();
                     }else{
                         $getUser = DB::table('users')
@@ -61,12 +64,36 @@ class UserController extends Controller
                     }
                 }
 
-                foreach ($getUser as $getUsers){
-                    echo $getUsers->email;
+                $countUser = count($getUser);
+
+                $dataArray = [];
+                for($c=0; $c<$countUser; $c++){
+                    $roleName = $anotherController->getRole($getUser[$c]->id);
+                    $userPhoto = $anotherController->getProfileImage($getUser[$c]->id);
+                    $dataArray[] = [
+                        'id' => "#".str_pad($getUser[$c]->id, 8, "0", STR_PAD_LEFT),
+                        'photo' =>$userPhoto, 
+                        'name' => $getUser[$c]->full_name, 
+                        'email' => $getUser[$c]->email, 
+                        'role' => $roleName
+                    ];
                 }
+
+                //dd($dataArray);
+
+                $dataSetting = DB::table('level_setting')->first();
+                return view('systemadmin.users', compact('userinfo', 'assets', 'pageName', 'dataSetting', 'role', 'dataPI', 'level', 'countUser', 'dataArray'));
+
             }else{
-                Session::put('userLevel', $_GET["level"]);
-                return redirect(url('/user'));
+                if($_GET["level"] == "all"){
+                    Session::forget('userLevel');
+                    return redirect(url('/user'));
+                }else{
+                    Session::put('userLevel', $_GET["level"]);
+                    return redirect(url('/user'));
+                }
+                
+                
             }
 
             
