@@ -25,8 +25,8 @@ class UserController extends Controller
         $anotherController = new DefinedController();
 
         if($userinfo == null){
-            $fullUrl = Request::fullUrl();
-            Cookie::queue('lastURL', $fullUrl, 1440);
+            // $fullUrl = Request::fullUrl();
+            // Cookie::queue('lastURL', $fullUrl, 1440);
             $assets = "";
             //echo "1";
             return view('auth.login', compact('assets'));
@@ -108,8 +108,8 @@ class UserController extends Controller
         $anotherController = new DefinedController();
 
         if($userinfo == null){
-            $fullUrl = Request::fullUrl();
-            Cookie::queue('lastURL', $fullUrl, 1440);
+            // $fullUrl = Request::fullUrl();
+            // Cookie::queue('lastURL', $fullUrl, 1440);
             $assets = "";
             //echo "1";
             return view('auth.login', compact('assets'));
@@ -137,8 +137,8 @@ class UserController extends Controller
         $anotherController = new DefinedController();
 
         if($userinfo == null){
-            $fullUrl = Request::fullUrl();
-            Cookie::queue('lastURL', $fullUrl, 1440);
+            // $fullUrl = Request::fullUrl();
+            // Cookie::queue('lastURL', $fullUrl, 1440);
             $assets = "";
             //echo "1";
             return view('auth.login', compact('assets'));
