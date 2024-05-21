@@ -24,28 +24,90 @@ class ProfileController extends Controller
         $anotherController = new DefinedController();
 
         if($userinfo == null){
-            $fullUrl = Request::fullUrl();
-            Cookie::queue('lastURL', $fullUrl, 1440);
+
             $assets = "";
             //echo "1";
             return view('auth.login', compact('assets'));
         }else{
 
-            //after login, must have//
-            $dataPI = $anotherController->getProfileImage($userinfo->id);
-            //END after login, must have//
+            if(empty($_GET["id"])){
+                $dateNow = Carbon::now('Asia/Kuala_Lumpur');
+                $tsty = $anotherController->getTotalSales($userinfo->id, $userinfo->role, date("Y", strtotime($dateNow))); //total sales this year
 
-            $dataSP = $anotherController->getSponsor($userinfo->id);
+                $tsly = $anotherController->getTotalSales($userinfo->id, $userinfo->role, date("Y", strtotime('-1 year', strtotime($dateNow)))); //total sales last year
 
-            //dd($dataSP);
+                $tstm = $anotherController->getTotalSales($userinfo->id, $userinfo->role, date("Y-m", strtotime($dateNow))); //total sales this month
 
-            $states = DB::table('states')->get();
+                $tslm = $anotherController->getTotalSales($userinfo->id, $userinfo->role, date("Y-m", strtotime('-1 month', strtotime($dateNow)))); //total sales last month
 
-            $assets = "";
-            $pageName = "Profile";
-            $role = "role_".$userinfo->role;
-            $dataSetting = DB::table('level_setting')->first();
-            return view('systemadmin.profile', compact('userinfo', 'assets', 'pageName', 'dataSetting', 'role', 'dataPI', 'dataSP', 'states'));
+                $tstd = $anotherController->getTotalSales($userinfo->id, $userinfo->role, date("Y-m-d", strtotime($dateNow))); //total sales today
+
+                $tsld = $anotherController->getTotalSales($userinfo->id, $userinfo->role, date("Y-m-d", strtotime('-1 day', strtotime($dateNow)))); //total sales last month
+                //after login, must have//
+                $dataPI = $anotherController->getProfileImage($userinfo->id);
+                //END after login, must have//
+
+                $dataSP = $anotherController->getSponsor($userinfo->id);
+
+                //dd($dataSP);
+
+                $states = DB::table('states')->get();
+
+                $assets = "";
+                $pageName = "Profile";
+                $role = "role_".$userinfo->role;
+                $dataSetting = DB::table('level_setting')->first();
+                return view('systemadmin.profile', compact('userinfo', 'assets', 'pageName', 'dataSetting', 'role', 'dataPI', 'dataSP', 'states', 'tsty', 'tsly', 'tstm', 'tslm', 'tstd', 'tsld', 'dateNow'));
+            }else{
+
+                $verifyNetwork = DB::table('users')->where('id', $_GET["id"])->where('network', 'like', '%['.$userinfo->id.']%')->whereNull('soft_delete')->get();
+
+                if($_GET["id"] == $userinfo->id){
+                    return redirect(url('/profile'));
+                }else if(count($verifyNetwork) != 1){
+                    ?>
+                        <script>
+                            alert("Error! User that you try to view either not in your network or not existed.");
+                            window.location.href = "<?php echo url('/profile'); ?>";
+                        </script>
+                    <?php
+                }else{
+                    $dateNow = Carbon::now('Asia/Kuala_Lumpur');
+
+                    $userinfos = DB::table('users')->where('id', $_GET["id"])->where('network', 'like', '%['.$userinfo->id.']%')->whereNull('soft_delete')->first();
+
+                    $tsty = $anotherController->getTotalSales($userinfos->id, $userinfos->role, date("Y", strtotime($dateNow))); //total sales this year
+
+                    $tsly = $anotherController->getTotalSales($userinfos->id, $userinfos->role, date("Y", strtotime('-1 year', strtotime($dateNow)))); //total sales last year
+
+                    $tstm = $anotherController->getTotalSales($userinfos->id, $userinfos->role, date("Y-m", strtotime($dateNow))); //total sales this month
+
+                    $tslm = $anotherController->getTotalSales($userinfos->id, $userinfos->role, date("Y-m", strtotime('-1 month', strtotime($dateNow)))); //total sales last month
+
+                    $tstd = $anotherController->getTotalSales($userinfos->id, $userinfos->role, date("Y-m-d", strtotime($dateNow))); //total sales today
+
+                    $tsld = $anotherController->getTotalSales($userinfos->id, $userinfos->role, date("Y-m-d", strtotime('-1 day', strtotime($dateNow)))); //total sales last month
+
+                    //after login, must have//
+                    $dataPI = $anotherController->getProfileImage($userinfos->id);
+                    //END after login, must have//
+
+                    $dataSP = $anotherController->getSponsor($userinfos->sponsor);
+
+                    //dd($dataSP);
+
+                    $states = DB::table('states')->get();
+
+                    $assets = "";
+                    $pageName = "Profile";
+                    $role = "role_".$userinfo->role;
+                    $dataSetting = DB::table('level_setting')->first();
+                    return view('systemadmin.profile2', compact('userinfo', 'userinfos', 'assets', 'pageName', 'dataSetting', 'role', 'dataPI', 'dataSP', 'states', 'tsty', 'tsly', 'tstm', 'tslm', 'tstd', 'tsld', 'dateNow'));
+                }
+
+            }
+
+
 
         }
 
@@ -62,7 +124,7 @@ class ProfileController extends Controller
             //echo "1";
             return view('auth.login', compact('assets'));
         }else{
-            $id = $userinfo->id;
+            $id = $request->userID;
             $updatedAt = Carbon::now('Asia/Kuala_Lumpur');
 
             $rules = [
@@ -120,7 +182,7 @@ class ProfileController extends Controller
             //echo "1";
             return view('auth.login', compact('assets'));
         }else{
-            $id = $userinfo->id;
+            $id = $request->userID;
             $updatedAt = Carbon::now('Asia/Kuala_Lumpur');
 
             //preg_match_all('/\d+/', $request->phone_no, $matches);
@@ -190,7 +252,7 @@ class ProfileController extends Controller
             //echo "1";
             return view('auth.login', compact('assets'));
         }else{
-            $id = $userinfo->id;
+            $id = $request->userID;
             $updatedAt = Carbon::now('Asia/Kuala_Lumpur');
 
             //preg_match_all('/\d+/', $request->phone_no, $matches);

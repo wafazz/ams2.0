@@ -15,6 +15,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Cookie;
+use Illuminate\Validation\ValidationException;
 
 class UserController extends Controller
 {
@@ -68,15 +69,16 @@ class UserController extends Controller
 
                 $dataArray = [];
                 for($c=0; $c<$countUser; $c++){
-                    $roleName = $anotherController->getRole($getUser[$c]->id);
+                    $roleName = $anotherController->getRole($getUser[$c]->role);
                     $userPhoto = $anotherController->getProfileImage($getUser[$c]->id);
                     $dataArray[] = [
                         'id' => $getUser[$c]->id,
-                        'photo' =>$userPhoto, 
-                        'name' => $getUser[$c]->full_name, 
-                        'email' => $getUser[$c]->email, 
-                        'role' => $roleName, 
-                        'status' => $getUser[$c]->status
+                        'photo' =>$userPhoto,
+                        'name' => $getUser[$c]->full_name,
+                        'email' => $getUser[$c]->email,
+                        'role' => $roleName,
+                        'status' => $getUser[$c]->status,
+                        'reg_date' => $getUser[$c]->created_at
                     ];
                 }
 
@@ -93,11 +95,59 @@ class UserController extends Controller
                     Session::put('userLevel', $_GET["level"]);
                     return redirect(url('/user'));
                 }
-                
-                
+
+
             }
 
-            
+
+        }
+    }
+
+    public function regNew(Request $request)
+    {
+        $userinfo = Auth::user();
+        $currentDateTime = Carbon::now('Asia/Kuala_Lumpur');
+        $formattedDateTime = $currentDateTime->format('Y-m-d H:i:s');
+        $rules = [
+            'password' => 'required|min:8|confirmed', // The 'confirmed' rule checks if password_confirmation field matches password
+            'email' => 'unique:users',
+        ];
+
+        $messages = [
+            'password.required' => 'Password is required.',
+            'password.min' => 'Password must be at least 8 characters.',
+            'password.confirmed' => 'Passwords do not match.',
+            'email.unique' => 'Email already existed. Please use another.',
+        ];
+
+        $validator = Validator::make($request->all(), $rules, $messages);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput($request->all());
+        }else{
+            $query = [
+                'email'=>$request->email,
+                'password'=>bcrypt($request->password),
+                'email_verification_status'=>0,
+                'full_name'=>$request->full_name,
+                'phone'=>$request->phone,
+                'created_at'=>$formattedDateTime,
+                'updated_at'=>$formattedDateTime,
+                'sponsor'=>$userinfo->id,
+                'status'=>1,
+                'role'=>$request->designation
+            ];
+            $addNewUser = DB::table('users')->insertGetId($query);
+            $newNetwork = $userinfo->network.",[".$addNewUser."]";
+            $updateUser = DB::table('users')->where('id', $addNewUser)->update(['network'=>$newNetwork]);
+            //$insertedId = $addNewUser->id;
+            //Mail::to('3c2481c88c-df8a3f+1@inbox.mailtrap.io')->send(new SendingEmail());
+
+            if($updateUser){
+                return redirect()->back()->with('success', 'User created successfully. ID: #' . $addNewUser);
+            }
+
+
         }
     }
 
@@ -125,8 +175,8 @@ class UserController extends Controller
                     return redirect()->back()->with('success', 'Successful activate User #'.$id);
                 }
             }
-            
-            
+
+
         }
     }
 
@@ -154,8 +204,8 @@ class UserController extends Controller
                     return redirect()->back()->with('success', 'Successful unbanned User #'.$id);
                 }
             }
-            
-            
+
+
         }
     }
 
@@ -183,8 +233,8 @@ class UserController extends Controller
                     return redirect()->back()->with('success', 'Successful banned User #'.$id);
                 }
             }
-            
-            
+
+
         }
     }
 }

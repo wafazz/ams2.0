@@ -37,7 +37,14 @@ Route::post('/change-password', 'App\Http\Controllers\ProfileController@updatePa
 
 //users//
 Route::get('/user', 'App\Http\Controllers\UserController@index');
+Route::post('/user', 'App\Http\Controllers\UserController@regNew');
 Route::get('/user-details/{id}', 'App\Http\Controllers\UserController@userDetails');
 Route::get('/activate-user/{id}', 'App\Http\Controllers\UserController@activateUser');
 Route::get('/banned-user/{id}', 'App\Http\Controllers\UserController@bannedUser');
 Route::get('/unbanned-user/{id}', 'App\Http\Controllers\UserController@unbannedUser');
+
+//product//
+
+Route::get('/product/create-category-brand', 'App\Http\Controllers\ProductController@categoryIndex');
+Route::post('/add-category', 'App\Http\Controllers\ProductController@categoryAdd');
+Route::post('/add-brand', 'App\Http\Controllers\ProductController@brandAdd');

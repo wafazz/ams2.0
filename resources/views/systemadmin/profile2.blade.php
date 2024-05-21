@@ -28,6 +28,7 @@
 
             <!-- Main row -->
             <div class="row">
+
                 <div class="col-lg-12 col-12">
                     <!-- small box -->
                     <div class="small-box bg-danger">
@@ -128,10 +129,9 @@
                                 <form action="" id="uploadForm" style="display:none;" method="post" enctype="multipart/form-data">
                                     {{ csrf_field() }}
                                     <div class="form-group">
-
-                                        <input type="hidden" name="userID" value="{{ $userinfo->id }}">
                                         <label>Upload New Profile Image</label>
                                         <div class="custom-file">
+                                            <input type="hidden" name="userID" value="{{ $userinfos->id }}">
                                             <input type="file" name="newProfileImage" id="exampleInputFile" class="custom-file-input ">
                                             <label class="custom-file-label" for="exampleInputFile">Choose file</label>
                                             <span style="color:red;">Only format jpeg, jpg, png & gif allowed to upload.</span>
@@ -240,11 +240,12 @@
                     <!-- Map card -->
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title"><i class="fas fa-user mr-1"></i> Your Details</h3>
-
-                        <span style="position: absolute;
-                        right: 10px !important;cursor:pointer;" id="editDetails"><div id="open1"><i class="fas fa-edit"></i> edit</div><div id="close1" style="display:none;"><i class="fas fa-edit"></i> close</div></span>
-                        <input type="hidden" value="0" id="openclose">
+                            <h3 class="card-title"><i class="fas fa-user mr-1"></i> User Details</h3>
+                            @if ($userinfo->role == 1 || $userinfo->role == 2)
+                            <span style="position: absolute;
+                            right: 10px !important;cursor:pointer;" id="editDetails"><div id="open1"><i class="fas fa-edit"></i> edit</div><div id="close1" style="display:none;"><i class="fas fa-edit"></i> close</div></span>
+                            <input type="hidden" value="0" id="openclose">
+                            @endif
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
@@ -262,41 +263,41 @@
                                     <div class="form-group">
                                         <label>Email:</label>
                                         <span class="form-control">
-                                            <strong>{{ $userinfo->email }}</strong>
+                                            <strong>{{ $userinfos->email }}</strong>
                                         </span>
                                     </div>
                                     <div class="form-group">
 
-                                        <input type="hidden" name="userID" value="{{ $userinfo->id }}">
+                                        <input type="hidden" name="userID" value="{{ $userinfos->id }}">
                                         <label>Full Name <span class="req" style="color:red;display:none;">*</span>:</label>
-                                        <input type="text" disabled name="full_name" class="form-control" style="cursor:no-drop;" value="{{ $userinfo->full_name }}">
+                                        <input type="text" disabled name="full_name" class="form-control" style="cursor:no-drop;" value="{{ $userinfos->full_name }}">
                                     </div>
                                     <div class="form-group">
                                         <label>Phone Number <span class="req" style="color:red;display:none;">*</span>:</label>
-                                        <input type="text" disabled name="phone_no" class="form-control" style="cursor:no-drop;" value="{{ $userinfo->phone }}">
+                                        <input type="text" disabled name="phone_no" class="form-control" style="cursor:no-drop;" value="{{ $userinfos->phone }}">
                                     </div>
                                     <div class="form-group">
                                         <label>Address Line 1 <span class="req" style="color:red;display:none;">*</span>:</label>
-                                        <input type="text" disabled name="address_1" class="form-control" style="cursor:no-drop;" value="{{ $userinfo->address_1 }}">
+                                        <input type="text" disabled name="address_1" class="form-control" style="cursor:no-drop;" value="{{ $userinfos->address_1 }}">
                                     </div>
                                     <div class="form-group">
                                         <label>Address Line 2 <span class="req" style="display:none;">(optional)</span>:</label>
-                                        <input type="text" disabled name="address_2" class="form-control" style="cursor:no-drop;" value="{{ $userinfo->address_2 }}">
+                                        <input type="text" disabled name="address_2" class="form-control" style="cursor:no-drop;" value="{{ $userinfos->address_2 }}">
                                     </div>
                                     <div class="form-group">
                                         <label>Postcode <span class="req" style="color:red;display:none;">*</span>:</label>
-                                        <input type="text" disabled name="postcode" class="form-control" style="cursor:no-drop;" value="{{ $userinfo->postcode }}">
+                                        <input type="text" disabled name="postcode" class="form-control" style="cursor:no-drop;" value="{{ $userinfos->postcode }}">
                                     </div>
                                     <div class="form-group">
                                         <label>City <span class="req" style="color:red;display:none;">*</span>:</label>
-                                        <input type="text" disabled name="city" class="form-control" style="cursor:no-drop;" value="{{ $userinfo->postcode }}">
+                                        <input type="text" disabled name="city" class="form-control" style="cursor:no-drop;" value="{{ $userinfos->postcode }}">
                                     </div>
                                     <div class="form-group">
                                         <label>State <span class="req" style="color:red;display:none;">*</span>:</label>
                                         <select type="text" disabled name="state" class="form-control" style="cursor:no-drop;">
                                             <option value="">select your state</option>
                                             @foreach ($states as $state)
-                                                @if($userinfo->state == $state->name)
+                                                @if($userinfos->state == $state->name)
                                                     <option value="{{ $state->name }}" selected>{{ $state->name }}</option>
                                                 @else
                                                     <option value="{{ $state->name }}">{{ $state->name }}</option>
@@ -309,13 +310,13 @@
                                         <select type="text" disabled name="country" class="form-control" style="cursor:no-drop;">
                                             <option value="">select your country</option>
 
-                                                @if($userinfo->country == "Malaysia")
+                                                @if($userinfos->country == "Malaysia")
                                                     <option value="Malaysia" selected>Malaysia</option>
                                                 @else
                                                     <option value="Malaysia">Malaysia</option>
                                                 @endif
 
-                                                @if($userinfo->country == "Singapore")
+                                                @if($userinfos->country == "Singapore")
                                                     <option value="Singapore" selected>Singapore</option>
                                                 @else
                                                     <option value="Singapore">Singapore</option>
@@ -323,9 +324,11 @@
 
                                         </select>
                                     </div>
+                                    @if ($userinfo->role == 1 || $userinfo->role == 2)
                                     <div class="form-group">
                                         <button class="btn btn-primary" disabled type="submit" name="saveProfile"><i class="fa fa-save"></i> Save Profile</button>
                                     </div>
+                                    @endif
 
                                 </form>
 
@@ -382,6 +385,7 @@
                     </div>
                     <!--/.direct-chat -->
 
+                    @if ($userinfo->role == 1 || $userinfo->role == 2)
                     <div class="card">
                         <div class="card-header">
                             <h3 class="card-title"><i class="fas fa-lock mr-1"></i> Password</h3>
@@ -396,7 +400,8 @@
 
 
                                 <div class="form-group">
-                                    <input type="hidden" name="userID" value="{{ $userinfo->id }}">
+
+                                    <input type="hidden" name="userID" value="{{ $userinfos->id }}">
                                     <label>Current Password <span class="req" style="color:red;display:inline-block;">*</span>:</label>
                                     <input type="password"  name="current_password" class="form-control" placeholder="Current Password">
                                 </div>
@@ -417,6 +422,9 @@
                         </div>
                     </div>
                     <!-- solid sales graph -->
+                    @endif
+
+
 
                     <!-- /.card -->
                 </section>

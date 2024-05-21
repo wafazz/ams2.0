@@ -97,7 +97,7 @@ class DefinedController extends Controller
         {
             $dataSales = DB::table('order')->where('network', 'like', '%['.$id.']%')->whereIn('status', $statuses)->where('created_at', 'like', '%'.$date.'%')->sum('order_amount');
         }
-        
+
         //dd($dataSetting->status);
         return $dataSales;
     }
@@ -106,11 +106,11 @@ class DefinedController extends Controller
     {
         //$role = "role_".$id;
 
-        
+
         $statuses = ['2', '3', '4', '5'];
         $dataSales = DB::table('order')->where('network', 'like', '%['.$id.']%')->whereIn('status', $statuses)->sum('order_amount');
-        
-        
+
+
         //dd($dataSetting->status);
         return $dataSales;
     }
@@ -124,7 +124,7 @@ class DefinedController extends Controller
 
         $dataOrderAll = DB::table('order')->where('network', 'like', '%['.$id.']%')->whereIn('status', $statuses)->get();
         $dataOrderAllRC = DB::table('order')->where('network', 'like', '%['.$id.']%')->whereIn('status', $statusess)->get();
-        
+
         if($role != 4)
         {
             $dataOrderAllPersonal = DB::table('order')->where('order_by', $id)->where('network', 'like', '%['.$id.']%')->whereIn('status', $statuses)->get();
@@ -142,9 +142,15 @@ class DefinedController extends Controller
             "personal"=>count($dataOrderAllPersonal),
             "personalrc"=>count($dataOrderAllPersonalRC)
         ];
-        
-        
+
+
         //dd($dataSetting->status);
         return $dataOrders;
+    }
+
+    public function getDateTime()
+    {
+        $dateNow = Carbon::now('Asia/Kuala_Lumpur');
+        return $dateNow;
     }
 }

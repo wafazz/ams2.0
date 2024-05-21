@@ -36,7 +36,7 @@
 
   <!-- DataTables -->
     <link rel="stylesheet" href="{{ url('') }}/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
-    
+
     <link rel="stylesheet" href="https://cdn.datatables.net/2.0.7/css/dataTables.dataTables.css">
     <link rel="stylesheet" href="{{ url('') }}/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
     <link rel="stylesheet" href="{{ url('') }}/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
@@ -271,32 +271,32 @@
                                 </p>
                             </a>
                         </li>
-                        <li class="nav-item {{ Request::is('subscriber/*') ? 'menu-open' : '' }}">
-                            <a href="#" class="nav-link {{ Request::is('subscriber/*') ? 'active' : '' }}">
-                                <i class="nav-icon fas fa-users"></i>
+                        <li class="nav-item {{ Request::is('product/*') ? 'menu-open' : '' }}">
+                            <a href="#" class="nav-link {{ Request::is('product/*') ? 'active' : '' }}">
+                                <i class="nav-icon fab fa-product-hunt"></i>
                                 <p>
-                                    Subscriber
-                                    <i class="fas fa-angle-left right"></i>
+                                    Product
+                                    <i class="right fas fa-angle-left"></i>
                                     <span class="badge badge-info right">0</span>
                                 </p>
                             </a>
                             <ul class="nav nav-treeview" style="padding-left: 0px !important;">
                                 <li class="nav-item">
-                                    <a href="{{ url('subscriber/company') }}" class="nav-link {{ Request::is('subscriber/company') ? 'active' : '' }} {{ Request::is('subscriber/company/*') ? 'active' : '' }}">
+                                    <a href="{{ url('product/list') }}" class="nav-link {{ Request::is('product/list') ? 'active' : '' }} {{ Request::is('subscriber/company/*') ? 'active' : '' }}">
                                         <i class="fas fa-arrow-right nav-icon"></i>
-                                        <p>Company</p>
+                                        <p>List Product</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="{{ url('subscriber/user') }}" class="nav-link {{ Request::is('subscriber/user') ? 'active' : '' }}">
+                                    <a href="{{ url('product/create-product') }}" class="nav-link {{ Request::is('product/create-product') ? 'active' : '' }}">
                                         <i class="fas fa-arrow-right nav-icon"></i>
-                                        <p>User</p>
+                                        <p>Create New Product</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="{{ url('subscriber/create') }}" class="nav-link {{ Request::is('subscriber/create') ? 'active' : '' }}">
+                                    <a href="{{ url('product/create-category-brand') }}" class="nav-link {{ Request::is('product/creat-category-brand') ? 'active' : '' }}">
                                         <i class="fas fa-arrow-right nav-icon"></i>
-                                        <p>Registration</p>
+                                        <p>Category / Brand</p>
                                     </a>
                                 </li>
 
@@ -332,6 +332,14 @@
                             </ul>
                         </li>
 
+                        <li class="nav-item">
+                            <a href="{{ url('profile') }}" class="bg-secondary nav-link {{ Request::is('profile') ? 'active' : '' }}">
+                                <i class="nav-icon fas fa-user"></i>
+                                <p>
+                                    Profile
+                                </p>
+                            </a>
+                        </li>
                         <li class="nav-item">
                             <a href="{{ url('logout') }}" class="nav-link bg-danger">
                                 <i class="nav-icon fas fa-sign-out-alt text-warning"></i>
