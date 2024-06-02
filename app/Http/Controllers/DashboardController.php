@@ -39,6 +39,8 @@ class DashboardController extends Controller
 
             $dateNow = Carbon::now('Asia/Kuala_Lumpur');
 
+            $menu = $anotherController->menuCount();
+
             $tsty = $anotherController->getTotalSales($userinfo->id, $userinfo->role, date("Y", strtotime($dateNow))); //total sales this year
 
             $tsly = $anotherController->getTotalSales($userinfo->id, $userinfo->role, date("Y", strtotime('-1 year', strtotime($dateNow)))); //total sales last year
@@ -60,7 +62,7 @@ class DashboardController extends Controller
             if($userinfo->role == 1 || $userinfo->role == 2){
                 $role = "role_".$userinfo->role;
                 $dataSetting = DB::table('level_setting')->first();
-                return view('systemadmin.dashboard', compact('userinfo', 'assets', 'pageName', 'dataSetting', 'role', 'tsty', 'tsly', 'tstm', 'tslm', 'tstd', 'tsld', 'dateNow', 'overallSales', 'oOverall', 'oOverallP'));
+                return view('systemadmin.dashboard', compact('userinfo', 'assets', 'pageName', 'dataSetting', 'role', 'tsty', 'tsly', 'tstm', 'tslm', 'tstd', 'tsld', 'dateNow', 'overallSales', 'oOverall', 'oOverallP', 'menu'));
             }else{
                 echo "company";
             }

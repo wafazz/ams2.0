@@ -148,6 +148,25 @@ class DefinedController extends Controller
         return $dataOrders;
     }
 
+    public function menuCount()
+    {
+        //product
+        $product = count(DB::table('products')->whereNull('soft_delete')->get());
+
+        //category/brand
+        $catC = count(DB::table('category')->whereNull('soft_delete')->get());
+        $brandC = count(DB::table('brand')->whereNull('soft_delete')->get());
+
+        $catBrand = $catC + $brandC;
+
+        $menu = [
+            'product'=>$product,
+            'catBrand'=>$catBrand
+        ];
+
+        return $menu;
+    }
+
     public function getDateTime()
     {
         $dateNow = Carbon::now('Asia/Kuala_Lumpur');

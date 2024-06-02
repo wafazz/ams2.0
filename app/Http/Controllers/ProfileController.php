@@ -30,6 +30,8 @@ class ProfileController extends Controller
             return view('auth.login', compact('assets'));
         }else{
 
+            $menu = $anotherController->menuCount();
+
             if(empty($_GET["id"])){
                 $dateNow = Carbon::now('Asia/Kuala_Lumpur');
                 $tsty = $anotherController->getTotalSales($userinfo->id, $userinfo->role, date("Y", strtotime($dateNow))); //total sales this year
@@ -57,7 +59,7 @@ class ProfileController extends Controller
                 $pageName = "Profile";
                 $role = "role_".$userinfo->role;
                 $dataSetting = DB::table('level_setting')->first();
-                return view('systemadmin.profile', compact('userinfo', 'assets', 'pageName', 'dataSetting', 'role', 'dataPI', 'dataSP', 'states', 'tsty', 'tsly', 'tstm', 'tslm', 'tstd', 'tsld', 'dateNow'));
+                return view('systemadmin.profile', compact('userinfo', 'assets', 'pageName', 'dataSetting', 'role', 'dataPI', 'dataSP', 'states', 'tsty', 'tsly', 'tstm', 'tslm', 'tstd', 'tsld', 'dateNow', 'menu'));
             }else{
 
                 $verifyNetwork = DB::table('users')->where('id', $_GET["id"])->where('network', 'like', '%['.$userinfo->id.']%')->whereNull('soft_delete')->get();
@@ -102,7 +104,7 @@ class ProfileController extends Controller
                     $pageName = "Profile";
                     $role = "role_".$userinfo->role;
                     $dataSetting = DB::table('level_setting')->first();
-                    return view('systemadmin.profile2', compact('userinfo', 'userinfos', 'assets', 'pageName', 'dataSetting', 'role', 'dataPI', 'dataSP', 'states', 'tsty', 'tsly', 'tstm', 'tslm', 'tstd', 'tsld', 'dateNow'));
+                    return view('systemadmin.profile2', compact('userinfo', 'userinfos', 'assets', 'pageName', 'dataSetting', 'role', 'dataPI', 'dataSP', 'states', 'tsty', 'tsly', 'tstm', 'tslm', 'tstd', 'tsld', 'dateNow', 'menu'));
                 }
 
             }
@@ -126,6 +128,9 @@ class ProfileController extends Controller
         }else{
             $id = $request->userID;
             $updatedAt = Carbon::now('Asia/Kuala_Lumpur');
+
+
+            $menu = $anotherController->menuCount();
 
             $rules = [
                 'image' => 'image|mimes:jpeg,png,jpg,gif',

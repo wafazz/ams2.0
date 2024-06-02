@@ -40,6 +40,8 @@ class UserController extends Controller
             $pageName = "User/Member";
             $role = "role_".$userinfo->role;
 
+            $menu = $anotherController->menuCount();
+
             if(empty($_GET["level"])){
                 $level = Session::get('userLevel');
 
@@ -85,7 +87,7 @@ class UserController extends Controller
                 //dd($dataArray);
 
                 $dataSetting = DB::table('level_setting')->first();
-                return view('systemadmin.users', compact('userinfo', 'assets', 'pageName', 'dataSetting', 'role', 'dataPI', 'level', 'countUser', 'dataArray'));
+                return view('systemadmin.users', compact('userinfo', 'assets', 'pageName', 'dataSetting', 'role', 'dataPI', 'level', 'countUser', 'dataArray', 'menu'));
 
             }else{
                 if($_GET["level"] == "all"){

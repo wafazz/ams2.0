@@ -277,7 +277,6 @@
                                 <p>
                                     Product
                                     <i class="right fas fa-angle-left"></i>
-                                    <span class="badge badge-info right">0</span>
                                 </p>
                             </a>
                             <ul class="nav nav-treeview" style="padding-left: 0px !important;">
@@ -285,18 +284,21 @@
                                     <a href="{{ url('product/list') }}" class="nav-link {{ Request::is('product/list') ? 'active' : '' }} {{ Request::is('subscriber/company/*') ? 'active' : '' }}">
                                         <i class="fas fa-arrow-right nav-icon"></i>
                                         <p>List Product</p>
+                                        <span class="badge badge-info right">{{ $menu["product"] }}</span>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="{{ url('product/create-product') }}" class="nav-link {{ Request::is('product/create-product') ? 'active' : '' }}">
                                         <i class="fas fa-arrow-right nav-icon"></i>
                                         <p>Create New Product</p>
+                                        <span class="badge badge-danger right">+</span>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="{{ url('product/create-category-brand') }}" class="nav-link {{ Request::is('product/creat-category-brand') ? 'active' : '' }}">
                                         <i class="fas fa-arrow-right nav-icon"></i>
                                         <p>Category / Brand</p>
+                                        <span class="badge badge-info right">{{ $menu["catBrand"] }}</span>
                                     </a>
                                 </li>
 

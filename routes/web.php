@@ -44,7 +44,8 @@ Route::get('/banned-user/{id}', 'App\Http\Controllers\UserController@bannedUser'
 Route::get('/unbanned-user/{id}', 'App\Http\Controllers\UserController@unbannedUser');
 
 //product//
-
 Route::get('/product/create-category-brand', 'App\Http\Controllers\ProductController@categoryIndex');
 Route::post('/add-category', 'App\Http\Controllers\ProductController@categoryAdd');
 Route::post('/add-brand', 'App\Http\Controllers\ProductController@brandAdd');
+Route::post('/add-brand', 'App\Http\Controllers\ProductController@brandAdd');
+Route::post('/product/list', 'App\Http\Controllers\ProductController@index');

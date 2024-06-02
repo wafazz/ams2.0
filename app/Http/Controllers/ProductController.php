@@ -17,6 +17,37 @@ use Illuminate\Support\Facades\Cookie;
 
 class ProductController extends Controller
 {
+    public function index()
+    {
+        $userinfo = Auth::user();
+        //$data = System::all();
+        $anotherController = new DefinedController();
+        $dateNow = $anotherController->getDateTime(); //timezone Asia/Kuala_Lumpur
+
+
+
+        if($userinfo == null || $userinfo->role >= 3){
+
+            $assets = "";
+            //echo "1";
+            return view('auth.login', compact('assets'));
+        }else{
+
+            $assets = "../";
+            $pageName = "List Product";
+            $listProduct = DB::table('products')->whereNull('soft_delete')->get();
+
+
+
+            $menu = $anotherController->menuCount();
+
+            $role = "role_".$userinfo->role;
+            $dataSetting = DB::table('level_setting')->first();
+
+            return view('systemadmin.listproduct', compact('userinfo', 'assets', 'pageName', 'listProduct', 'dataSetting', 'role', 'menu'));
+        }
+    }
+
     public function categoryIndex()
     {
         $userinfo = Auth::user();
@@ -38,10 +69,14 @@ class ProductController extends Controller
             $listCategory = DB::table('category')->whereNull('soft_delete')->get();
             $listBrand = DB::table('brand')->whereNull('soft_delete')->get();
 
+
+
+            $menu = $anotherController->menuCount();
+
             $role = "role_".$userinfo->role;
             $dataSetting = DB::table('level_setting')->first();
 
-            return view('systemadmin.catbrand', compact('userinfo', 'assets', 'pageName', 'listCategory', 'listBrand', 'dataSetting', 'role'));
+            return view('systemadmin.catbrand', compact('userinfo', 'assets', 'pageName', 'listCategory', 'listBrand', 'dataSetting', 'role', 'menu'));
         }
     }
 
