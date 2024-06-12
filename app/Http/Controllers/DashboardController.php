@@ -32,6 +32,7 @@ class DashboardController extends Controller
             $assets = "";
             //echo "1";
             return view('auth.login', compact('assets'));
+            
         }else{
 
             $assets = "";
