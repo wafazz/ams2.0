@@ -43,7 +43,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="modal fade" id="modal-cat"  style="overflow:hidden;">
+                        <div class="modal fade" id="modal-cat">
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -57,36 +57,147 @@
                                     <div class="modal-body">
 
                                         <div class="form-group">
-                                            <label>Category</label>
-                                            <select class="form-control" name="category">
-                                                <option value="" selected readonly disabled>choose Category</option>
-                                                <?php
-                                                    foreach ($listCat as $cat) {
-                                                        ?>
-                                                        <option value="{{ $cat->id }}">{{ $cat->name }}</option>
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <label>Category [<a href="{{ url('') }}/product/create-category-brand">+ Add Category</a>]</label>
+                                                    <select class="form-control" name="category" required>
+                                                        <option value="" selected readonly disabled>choose Category</option>
                                                         <?php
-                                                    }
-                                                ?>
-                                            </select>
+                                                            foreach ($listCat as $cat) {
+                                                                ?>
+                                                                <option value="{{ $cat->id }}">{{ $cat->name }}</option>
+                                                                <?php
+                                                            }
+                                                        ?>
+                                                    </select>
+                                                </div>
+                                                <div class="col-6">
+                                                    <label>Brand [<a href="{{ url('') }}/product/create-category-brand">+ Add Brand</a>]</label>
+                                                    <select class="form-control" name="brand" required>
+                                                        <option value="" selected readonly disabled>choose Brand</option>
+                                                        <?php
+                                                            foreach ($listBrand as $brand) {
+                                                                ?>
+                                                                <option value="{{ $brand->id }}">{{ $brand->name }}</option>
+                                                                <?php
+                                                            }
+                                                        ?>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+
+
                                         </div>
                                         <div class="form-group">
-                                            <label>Brand [<a href="{{ url('') }}/product/create-category-brand">+ Add</a>]</label>
-                                            <select class="form-control" name="brand">
-                                                <option value="" selected readonly disabled>choose Brand</option>
+                                            <label>SKU</label>
+                                            <input  type="text" class="form-control" name="sku" required placeholder="Product SKU">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Name</label>
+                                            <input type="text" class="form-control" name="name" required placeholder="Product Name">
+                                        </div>
+
+                                        <h4>Dimension</h4>
+
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <label>Weight (gram)</label>
+                                                    <input type="number" class="form-control mb-3" min="1" step="1" name="weight" required placeholder="Product Weight in Gram">
+                                                </div>
+                                                <div class="col-6">
+                                                    <label>Length (cm)</label>
+                                                    <input type="number" class="form-control mb-3" min="1" step="1" name="length" required placeholder="Product Length in cm">
+                                                </div>
+                                                <div class="col-6">
+                                                    <label>Width (cm)</label>
+                                                    <input type="number" class="form-control mb-3" min="1" step="1" name="width" required placeholder="Product Width in cm">
+                                                </div>
+                                                <div class="col-6">
+                                                    <label>Height (cm)</label>
+                                                    <input type="number" class="form-control mb-3" min="1" step="1" name="height" required placeholder="Product Height in cm">
+                                                </div>
+                                            </div>
+
+
+
+                                        </div>
+
+                                        <h4>Pricing</h4>
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <label>Capital (RM)</label>
+                                                    <input type="number" class="form-control mb-3" min="1" step="0.01" name="capital" required placeholder="Product Capital Price (RM)">
+                                                </div>
+                                                <div class="col-6">
+                                                    <label>Retails (RM)</label>
+                                                    <input type="number" class="form-control mb-3" min="1" step="0.01" name="retail" required placeholder="Product Retail Price (RM)">
+                                                </div>
+
                                                 <?php
-                                                    foreach ($listBrand as $brand) {
-                                                        ?>
-                                                        <option value="{{ $brand->id }}">{{ $brand->name }}</option>
-                                                        <?php
+
+                                                //foreach ($dataSetting as $ds) {
+
+                                                    //dd($dataSetting->level_usage);
+
+                                                    $maxR = $dataSetting->level_usage;
+
+
+
+                                                    $maxRR = $maxR + 4;
+
+                                                    for($d=1; $d<=$maxRR; $d++){
+                                                        if($d >= "5" AND $d<=$maxRR){
+                                                            $roleName = "role_".$d;
+                                                            ?>
+                                                             <div class="col-6">
+                                                                <label>{{ $dataSetting->$roleName }} (RM)</label>
+                                                                <input type="number" class="form-control mb-3" min="1" step="0.01" name="lp[]" required placeholder="{{ $dataSetting->$roleName }} Price (RM)">
+                                                            </div>
+                                                            <?php
+                                                        }
                                                     }
+
+                                                //}
                                                 ?>
-                                            </select>
+                                            </div>
+
+
+
+                                        </div>
+
+                                        <h4>Image</h4>
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <label>Product Image 1 (Mandatory)</label>
+                                                    <input type="file" class="form-control mb-3" min="1" step="1" name="productimg[]" required>
+                                                </div>
+                                                <div class="col-6">
+                                                    <label>Product Image 2 (optional)</label>
+                                                    <input type="file" class="form-control mb-3" min="1" step="1" name="productimg[]">
+                                                </div>
+                                                <div class="col-6">
+                                                    <label>Product Image 3 (optional)</label>
+                                                    <input type="file" class="form-control mb-3" min="1" step="1" name="productimg[]">
+                                                </div>
+                                                <div class="col-6">
+                                                    <label>Product Image 4 (optional)</label>
+                                                    <input type="file" class="form-control mb-3" min="1" step="1" name="productimg[]">
+                                                </div>
+
+                                            </div>
+
+
+
                                         </div>
 
                                     </div>
                                     <div class="modal-footer justify-content-between">
                                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                        <button type="submit" class="btn btn-primary">Add New Category</button>
+                                        <button type="submit" class="btn btn-primary">Add New Product</button>
                                     </div>
                                     </form>
 
