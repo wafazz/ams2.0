@@ -49,3 +49,4 @@ Route::post('/add-category', 'App\Http\Controllers\ProductController@categoryAdd
 Route::post('/add-brand', 'App\Http\Controllers\ProductController@brandAdd');
 Route::post('/add-brand', 'App\Http\Controllers\ProductController@brandAdd');
 Route::post('/product/list', 'App\Http\Controllers\ProductController@index');
+Route::get('/product/list', 'App\Http\Controllers\ProductController@index');

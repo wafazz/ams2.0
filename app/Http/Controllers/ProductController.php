@@ -36,6 +36,8 @@ class ProductController extends Controller
             $assets = "../";
             $pageName = "List Product";
             $listProduct = DB::table('products')->whereNull('soft_delete')->get();
+            $listCat = DB::table('category')->whereNull('soft_delete')->get();
+            $listBrand = DB::table('brand')->whereNull('soft_delete')->get();
 
 
 
@@ -44,7 +46,7 @@ class ProductController extends Controller
             $role = "role_".$userinfo->role;
             $dataSetting = DB::table('level_setting')->first();
 
-            return view('systemadmin.listproduct', compact('userinfo', 'assets', 'pageName', 'listProduct', 'dataSetting', 'role', 'menu'));
+            return view('systemadmin.listproduct', compact('userinfo', 'assets', 'pageName', 'listProduct', 'dataSetting', 'role', 'menu', 'listCat', 'listBrand'));
         }
     }
 
